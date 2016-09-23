@@ -9,30 +9,27 @@ MXNet [installation guide](http://mxnet.readthedocs.io/en/latest/how_to/build.ht
 
 1. Install dependencies
 
-    ```bash
+    ```shell
     yum groupinstall "Development Tools" 
     yum install atlas-devel opencv-devel
-
     ```
   
 2. Clone MXNet project
 
-    ```bash
+    ```shell
     git clone --recursive https://github.com/dmlc/mxnet
-
     ```
   
 3. Set MSHADOW_LDFLAGS in `mshadow/make/config.mk` from `-lcblas` to `-lsatlas` (line 56)
 
-    ```bash
+    ```shell
     MSHADOW_LDFLAGS += -lsatlas
     ```
   
 4. Make
 
-    ```bash
+    ```shell
     make -j$(nproc)
-
     ```
   
 5. Follow official MXNet [Python package installation](http://mxnet.readthedocs.io/en/latest/how_to/build.html#python-package-installation) guide for MXNet python package installation
