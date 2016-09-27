@@ -16,6 +16,7 @@ yum groupinstall "Development Tools"
 yum install atlas-devel opencv-devel
 {% endhighlight %}
 
+Atlas is installed in `/usr/lib64/atlas`.
 
 #### 2. Clone MXNet project
 {% highlight shell %}
@@ -23,9 +24,12 @@ git clone --recursive https://github.com/dmlc/mxnet
 {% endhighlight %}
 
   
-#### 3. Set MSHADOW_LDFLAGS in `mshadow/make/config.mk` from `-lcblas` to `-lsatlas` (line 56)
+#### 3. Modify MSHADOW_LDFLAGS in `mshadow/make/mshadow.mk` (line 67) from `-lcblas` to `-L/usr/lib64/atlas -lsatlas`
 {% highlight shell %}
-MSHADOW_LDFLAGS += -lsatlas
+...
+else ifeq ($(USE_BLAS), atlas)
+        MSHADOW_LDFLAGS += -L/usr/lib64/atlas -lsatlas
+...        
 {% endhighlight %}
 
   
