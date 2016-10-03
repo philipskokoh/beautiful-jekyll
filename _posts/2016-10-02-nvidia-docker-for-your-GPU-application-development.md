@@ -37,17 +37,21 @@ $ nvidia-docker run -it --rm compute.nvidia.com/nvidia/tensorflow python -m tens
 
 In these examples, `-it` is docker option to set an interactive connection and assign a terminal inside the new container, `--rm` flag tells docker to automatically clean up and remove the container when it exits. Docker images which start with `compute.nvidia.com/nvidia/` are official docker images from NVIDIA.
 
-`--rm` flag is useful for running short-term foreground processes. You can omit this option for debugging and development. It is always advisable to name your container when you keep your container using `--name`. If you write your python codes in jupyter notebook for your development, you can also specify port mapping using `-p` flag.
+`--rm` flag is useful for running short-term foreground processes. You can omit this option, if you want to keep a container when it exits for debugging and development. It is always advisable to name your container when you keep your container using `--name`. To start your container again, use `nvidia-docker start`. If you write your python codes in jupyter notebook for your development, you can also specify port mapping using `-p` flag.
 
 {% highlight shell %}
-## run bash shell in tensorflow container
-$ nvidia-docker run -it --name bash-tensorflow compute.nvidia.com/nvidia/tensorflow bash
+## run bash shell in tensorflow container. The container will not be removed after it exits
+$ nvidia-docker run -it --name my-tensorflow compute.nvidia.com/nvidia/tensorflow bash
+
+## Start and connect back to previously created container my-tensorflow
+$ nvidia-docker start my-tensorflow
+$ nvidia-docker attach my-tensorflow
 
 ## run jupyter notebook in tensorflow image and publish to host port 8888
-$ nvidia-docker run -it -p 8888:8888 --name my-tensorflow compute.nvidia.com/nvidia/tensorflow jupyter notebook
+## You can access your notebook at localhost:8888 in your host machine.
+$ nvidia-docker run -it -p 8888:8888 --name tensorflow-notebook compute.nvidia.com/nvidia/tensorflow jupyter notebook
 {% endhighlight %}
 
-You can access your notebook at `localhost:8888` in your host machine.
 
 
 References:
